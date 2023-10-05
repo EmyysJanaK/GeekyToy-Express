@@ -5,7 +5,7 @@ import { FaSearch, FaUser, FaCaretDown, FaShoppingCart } from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { paginationItems } from "../../../constants";
+import paginationItems from "../../../dev-data/data_pagination_items.json";
 
 const HeaderBottom = () => {
   const products = useSelector((state) => state.orebiReducer.products);
