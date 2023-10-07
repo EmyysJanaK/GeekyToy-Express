@@ -23,9 +23,13 @@ FROM product_category
 WHERE Product_id = ?; -- replace ? with the product_id 
 
 
--- Get all the item IDs in the cart for a given customer_id
-SELECT ci.Item_id, ci.Quantity, i.price
+-- Get all the items in the cart for a given customer_id
+SELECT 
+	ci.Item_id, 
+	ci.Quantity, 
+	i.price, 
+    ci.Quantity * i.price AS item_total
 FROM cart_item ci
 JOIN cart c USING (cart_id)
 JOIN item i USING (Item_id)
-WHERE Customer_id = 1; -- replace ? with the Customer_id 
+WHERE Customer_id = ?; -- replace ? with the Customer_id 
