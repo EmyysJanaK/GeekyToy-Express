@@ -7,7 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 -- -----------------------------------------------------
 -- Schema group32_V1.0
 -- -----------------------------------------------------
@@ -17,7 +17,7 @@ DROP SCHEMA IF EXISTS `group32_V1.0` ;
 -- Schema group32_V1.0
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `group32_V1.0` DEFAULT CHARACTER SET utf8mb3 ;
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 USE `group32_V1.0` ;
 
 -- -----------------------------------------------------
@@ -25,7 +25,7 @@ USE `group32_V1.0` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`admin` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`admin` (
   `Admin_id` INT NOT NULL AUTO_INCREMENT,
   `Admin_name` VARCHAR(50) NOT NULL,
@@ -36,52 +36,72 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`admin` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `group32_V1.0`.`varient`
+-- Table `group32_V1.0`.`variant`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `group32_V1.0`.`varient` ;
+DROP TABLE IF EXISTS `group32_V1.0`.`variant` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `group32_V1.0`.`varient` (
-  `Variant_id` INT NOT NULL AUTO_INCREMENT,
+-- SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `group32_V1.0`.`variant` (
+  `variant_id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`Variant_id`),
+  PRIMARY KEY (`variant_id`),
   UNIQUE INDEX `Name_UNIQUE` (`Name` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
+
+-- -- -----------------------------------------------------
+-- -- Table `group32_V1.0`.`attribute`
+-- -- -----------------------------------------------------
+-- DROP TABLE IF EXISTS `group32_V1.0`.`attribute` ;
+
+-- -- SHOW WARNINGS;
+-- CREATE TABLE IF NOT EXISTS `group32_V1.0`.`attribute` (
+--   `Attribute_id` INT NOT NULL AUTO_INCREMENT,
+--   `Variant_id` INT NOT NULL,
+--   `Name` VARCHAR(50) NOT NULL,
+--   PRIMARY KEY (`Attribute_id`),
+--   UNIQUE INDEX `Name_UNIQUE` (`Name` ASC) VISIBLE,
+--   INDEX `fk_Attributes_variants1_idx` (`Variant_id` ASC) VISIBLE,
+--   CONSTRAINT `fk_attribute_variant`
+--     FOREIGN KEY (`Variant_id`)
+--     REFERENCES `group32_V1.0`.`variant` (`Variant_id`)
+--     ON UPDATE CASCADE)
+-- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb3;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`attribute`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`attribute` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`attribute` (
-  `Attribute_id` INT NOT NULL AUTO_INCREMENT,
-  `Variant_id` INT NOT NULL,
+  `Attribute_id` INT NOT NULL, -- changed by Yapa
+  `variant_id` INT NOT NULL,
   `Name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`Attribute_id`),
+  PRIMARY KEY (`Attribute_id`, `variant_id`), -- changed by Yapa
   UNIQUE INDEX `Name_UNIQUE` (`Name` ASC) VISIBLE,
-  INDEX `fk_Attributes_Varients1_idx` (`Variant_id` ASC) VISIBLE,
-  CONSTRAINT `fk_attribute_varient`
-    FOREIGN KEY (`Variant_id`)
-    REFERENCES `group32_V1.0`.`varient` (`Variant_id`)
+  INDEX `fk_Attributes_variants1_idx` (`variant_id` ASC) VISIBLE,
+  CONSTRAINT `fk_attribute_variant`
+    FOREIGN KEY (`variant_id`)
+    REFERENCES `group32_V1.0`.`variant` (`variant_id`)
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`customer`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`customer` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`customer` (
   `Customer_id` INT NOT NULL AUTO_INCREMENT,
   `Password` VARCHAR(50) NULL,
@@ -100,18 +120,18 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`customer` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`card_detail`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`card_detail` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`card_detail` (
   `Customer_id` INT NOT NULL,
   `Name_on_card` VARCHAR(50) NOT NULL,
-  `Card_number` CHAR(16) NOT NULL,
+  `Card_number` CHAR(16) NOT NULL CHECK (LENGTH(`Card_number`) = 16),
   `Expiry_date` CHAR(5) NOT NULL,
   PRIMARY KEY (`Customer_id`),
   UNIQUE INDEX `Card_number_UNIQUE` (`Card_number` ASC) VISIBLE,
@@ -123,14 +143,14 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`card_detail` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`cart`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`cart` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`cart` (
   `Cart_id` INT NOT NULL AUTO_INCREMENT,
   `Customer_id` INT NOT NULL,
@@ -143,14 +163,14 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`cart` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`product`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`product` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`product` (
   `Product_id` INT NOT NULL AUTO_INCREMENT,
   `Title` VARCHAR(255) NOT NULL,
@@ -162,22 +182,22 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`product` (
   UNIQUE INDEX `Title_UNIQUE` (`Title` ASC) VISIBLE,
   UNIQUE INDEX `SKU_UNIQUE` (`SKU` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 89
+-- AUTO_INCREMENT = 89
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`item`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`item` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`item` (
   `Item_id` INT NOT NULL AUTO_INCREMENT,
   `Product_id` INT NOT NULL,
-  `Price` DECIMAL(9,2) NOT NULL,
-  `Quantity` INT NOT NULL DEFAULT '0',
+  `Price` DECIMAL(9,2) NOT NULL CHECK (`Price` >= 0),
+  `Quantity` INT NOT NULL DEFAULT '0' CHECK (`Quantity` >= 0),
   `Image` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`Item_id`),
   INDEX `fk_Unique_products_Product1_idx` (`Product_id` ASC) VISIBLE,
@@ -188,18 +208,18 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`item` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`cart_item`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`cart_item` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`cart_item` (
   `Cart_id` INT NOT NULL,
   `Item_id` INT NOT NULL,
-  `Quantity` INT NOT NULL,
+  `Quantity` INT NOT NULL  CHECK (`Quantity` >= 0),
   PRIMARY KEY (`Cart_id`, `Item_id`),
   INDEX `fk_Cart_items_Carts1_idx` (`Cart_id` ASC) VISIBLE,
   INDEX `fk_Cart_items_Unique_products1_idx` (`Item_id` ASC) VISIBLE,
@@ -214,14 +234,14 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`cart_item` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`delivery_type`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`delivery_type` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`delivery_type` (
   `Delivery_id` INT NOT NULL AUTO_INCREMENT,
   `Delivery_type` VARCHAR(50) NOT NULL,
@@ -230,14 +250,14 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`delivery_type` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`category`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`category` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`category` (
   `Category_id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(50) NOT NULL,
@@ -253,14 +273,14 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`category` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`payment_type`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`payment_type` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`payment_type` (
   `Payment_id` INT NOT NULL AUTO_INCREMENT,
   `Payment_type` VARCHAR(50) NOT NULL,
@@ -269,14 +289,14 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`payment_type` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`shop_order`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`shop_order` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`shop_order` (
   `Order_id` INT NOT NULL AUTO_INCREMENT,
   `Cart_id` INT NOT NULL,
@@ -307,19 +327,19 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`shop_order` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`order_item`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`order_item` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`order_item` (
   `Order_id` INT NOT NULL,
   `Item_id` INT NOT NULL,
-  `Quantity` INT NOT NULL,
-  `Unit_price` DECIMAL(9,2) NOT NULL,
+  `Quantity` INT NOT NULL CHECK (`Quantity` >= 0),
+  `Unit_price` DECIMAL(9,2) NOT NULL CHECK (`Unit_price` >= 0),
   PRIMARY KEY (`Order_id`, `Item_id`),
   INDEX `fk_Order_Items_Orders1_idx` (`Order_id` ASC) VISIBLE,
   INDEX `fk_Order_Items_Unique_products1_idx` (`Item_id` ASC) VISIBLE,
@@ -334,14 +354,14 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`order_item` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`product_category`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`product_category` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`product_category` (
   `Product_id` INT NOT NULL,
   `Category_id` INT NOT NULL,
@@ -360,14 +380,14 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`product_category` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `group32_V1.0`.`item_configuration`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`item_configuration` ;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`item_configuration` (
   `Item_id` INT NOT NULL,
   `Attribute_id` INT NOT NULL,
@@ -385,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `group32_V1.0`.`item_configuration` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-SHOW WARNINGS;
+-- SHOW WARNINGS;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
