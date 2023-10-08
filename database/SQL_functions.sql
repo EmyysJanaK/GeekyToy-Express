@@ -107,3 +107,23 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+-- When the email is given this function returns
+-- -1 if the user is a new guest
+-- 0 if the user has bought something as a guest
+-- 1 if the user is registered
+DROP FUNCTION IF EXISTS isTheUserRegistered;
+
+DELIMITER //
+CREATE FUNCTION isTheUserRegistered(p_email VARCHAR(255)) RETURNS INT
+READS SQL DATA
+BEGIN
+    DECLARE result INT;
+    SELECT Is_registered INTO result
+    FROM customer
+    WHERE email = p_email;
+    
+    RETURN IFNULL(result, -1);
+END //
+DELIMITER ;
