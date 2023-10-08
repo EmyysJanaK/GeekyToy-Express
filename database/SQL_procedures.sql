@@ -1,3 +1,4 @@
+-- insert a given variant name into the variant table if it does not exist
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS insert_variant_if_not_exists$$
@@ -12,6 +13,8 @@ BEGIN
 	END IF;
 END$$
 
+
+-- insert a given attribute name into the attribute table if it does not exist
 DROP PROCEDURE IF EXISTS insert_attribute_if_not_exists$$
 
 CREATE PROCEDURE insert_attribute_if_not_exists
@@ -29,6 +32,8 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
 
 DELIMITER $$
 
