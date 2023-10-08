@@ -33,3 +33,14 @@ FROM cart_item ci
 JOIN cart c USING (cart_id)
 JOIN item i USING (Item_id)
 WHERE Customer_id = ?; -- replace ? with the Customer_id 
+
+-- Adding a new product
+call `group32_v1.0`.add_product
+(
+	'Produt Title', 
+	'Sub Category1, Sub Category2, Sub Category3, Sub Category4, etc.', -- sub categories must be comma separated with a following whitespace
+    'Product Description',
+    113.113, -- Product weight in Kilograms
+    'Product_SKU',
+    'Product_image.png'
+);
