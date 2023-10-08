@@ -57,42 +57,42 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -- -----------------------------------------------------
 -- -- Table `group32_V1.0`.`attribute`
 -- -- -----------------------------------------------------
--- DROP TABLE IF EXISTS `group32_V1.0`.`attribute` ;
-
--- -- SHOW WARNINGS;
--- CREATE TABLE IF NOT EXISTS `group32_V1.0`.`attribute` (
---   `Attribute_id` INT NOT NULL AUTO_INCREMENT,
---   `Variant_id` INT NOT NULL,
---   `Name` VARCHAR(50) NOT NULL,
---   PRIMARY KEY (`Attribute_id`),
---   UNIQUE INDEX `Name_UNIQUE` (`Name` ASC) VISIBLE,
---   INDEX `fk_Attributes_variants1_idx` (`Variant_id` ASC) VISIBLE,
---   CONSTRAINT `fk_attribute_variant`
---     FOREIGN KEY (`Variant_id`)
---     REFERENCES `group32_V1.0`.`variant` (`Variant_id`)
---     ON UPDATE CASCADE)
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb3;
-
--- -----------------------------------------------------
--- Table `group32_V1.0`.`attribute`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `group32_V1.0`.`attribute` ;
 
 -- SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `group32_V1.0`.`attribute` (
-  `Attribute_id` INT NOT NULL, -- changed by Yapa
-  `variant_id` INT NOT NULL,
+  `Attribute_id` INT NOT NULL AUTO_INCREMENT,
+  `Variant_id` INT NOT NULL,
   `Name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`Attribute_id`, `variant_id`), -- changed by Yapa
+  PRIMARY KEY (`Attribute_id`),
   UNIQUE INDEX `Name_UNIQUE` (`Name` ASC) VISIBLE,
-  INDEX `fk_Attributes_variants1_idx` (`variant_id` ASC) VISIBLE,
+  INDEX `fk_Attributes_variants1_idx` (`Variant_id` ASC) VISIBLE,
   CONSTRAINT `fk_attribute_variant`
-    FOREIGN KEY (`variant_id`)
-    REFERENCES `group32_V1.0`.`variant` (`variant_id`)
+    FOREIGN KEY (`Variant_id`)
+    REFERENCES `group32_V1.0`.`variant` (`Variant_id`)
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
+-- -----------------------------------------------------
+-- Table `group32_V1.0`.`attribute`
+-- -----------------------------------------------------
+-- DROP TABLE IF EXISTS `group32_V1.0`.`attribute` ;
+
+-- -- SHOW WARNINGS;
+-- CREATE TABLE IF NOT EXISTS `group32_V1.0`.`attribute` (
+--   `Attribute_id` INT NOT NULL, -- changed by Yapa
+--   `variant_id` INT NOT NULL,
+--   `Name` VARCHAR(50) NOT NULL,
+--   PRIMARY KEY (`Attribute_id`, `variant_id`), -- changed by Yapa
+--   UNIQUE INDEX `Name_UNIQUE` (`Name` ASC) VISIBLE,
+--   INDEX `fk_Attributes_variants1_idx` (`variant_id` ASC) VISIBLE,
+--   CONSTRAINT `fk_attribute_variant`
+--     FOREIGN KEY (`variant_id`)
+--     REFERENCES `group32_V1.0`.`variant` (`variant_id`)
+--     ON UPDATE CASCADE)
+-- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8mb3;
 
 -- SHOW WARNINGS;
 
