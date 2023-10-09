@@ -44,3 +44,10 @@ call `group32_v1.0`.add_product
     'Product_SKU',
     'Product_image.png'
 );
+
+-- Add item to cart query
+-- Have to generate a dynamic query considering the number of items in the cart
+INSERT INTO cart_item VALUES
+    (?, ?), -- replace ? with the item_id and quantity respectively 
+    (?, ?), -- replace ? with the item_id and qunatity respectively
+    (?, ?); -- replace ? with the item_id and quantity respectively 
