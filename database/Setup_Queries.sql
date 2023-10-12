@@ -163,6 +163,13 @@ END$$
 
 DELIMITER ;
 
-
-
--- Adding a new product
+-- Get the minimum price of a product given the product_id
+CREATE FUNCTION GetMinPrice(product_id INT)
+RETURNS DECIMAL(10,2)
+BEGIN
+    DECLARE min_price DECIMAL(10,2);
+    SELECT MIN(price) INTO min_price
+    FROM item
+    WHERE product_id = product_id;
+    RETURN min_price;
+END;

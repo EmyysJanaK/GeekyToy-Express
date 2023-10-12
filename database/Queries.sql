@@ -51,3 +51,6 @@ INSERT INTO cart_item VALUES
     (?, ?), -- replace ? with the item_id and quantity respectively 
     (?, ?), -- replace ? with the item_id and qunatity respectively
     (?, ?); -- replace ? with the item_id and quantity respectively 
+
+-- query to get the minimum price of a product
+SELECT GetMinPrice(?) AS min_price -- replace ? with the product_id
