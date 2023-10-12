@@ -6,7 +6,7 @@ DELETE FROM `category`;
 DELETE FROM `item`;
 DELETE FROM `item_configuration`;
 DELETE FROM `attribute`;
-DELETE FROM `variant`;
+DELETE FROM `varient`;
 DELETE FROM `order_item`;
 DELETE FROM `shop_order`;
 DELETE FROM `payment_type`;
